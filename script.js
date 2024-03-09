@@ -1,22 +1,21 @@
-//your JS code here. If required.
-let first = null
-let second = null
-let third = null
-const allInputs = document.querySelectorAll('.toggle')
-allInputs.forEach(input=>{
-	input.addEventListener('click', e=>{
-		if(!first && !second && !third) {
-			first = e.target
-		}	
-		else if(!second && !third){
-			second = e.target
-		}
-		else if(!third) {
-			third = e.target
-			first.checked= false 
-			first = second
-			second = third 
-			third = null		 
-		}
-	})
-})
+document.addEventListener('DOMContentLoaded', function() {
+    const toggles = document.querySelectorAll('.toggle');
+    let checkedCount = 0;
+
+    toggles.forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            // If already 2 checkboxes are checked and current one is not checked
+            if (this.checked && checkedCount >= 2) {
+                // Uncheck the first checked checkbox
+                const firstChecked = document.querySelector('.toggle:checked');
+                if (firstChecked) {
+                    firstChecked.checked = false;
+                }
+            }
+            // Update checked count
+            checkedCount = document.querySelectorAll('.toggle:checked').length;
+            // Change color based on checked status
+            this.parentNode.style.backgroundColor = this.checked ? 'lightgreen' : '';
+        });
+    });
+});
