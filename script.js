@@ -1,21 +1,25 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const toggles = document.querySelectorAll('.toggle');
-    let checkedCount = 0;
+let first = null;
+let second = null;
+let third = null;
 
-    toggles.forEach(toggle => {
-        toggle.addEventListener('click', function() {
-            // If already 2 checkboxes are checked and current one is not checked
-            if (this.checked && checkedCount >= 2) {
-                // Uncheck the first checked checkbox
-                const firstChecked = document.querySelector('.toggle:checked');
-                if (firstChecked) {
-                    firstChecked.checked = false;
-                }
-            }
-            // Update checked count
-            checkedCount = document.querySelectorAll('.toggle:checked').length;
-            // Change color based on checked status
-            this.parentNode.style.backgroundColor = this.checked ? 'lightgreen' : '';
-        });
+const allDivs = document.querySelectorAll('.toggle-container div');
+
+allDivs.forEach(div => {
+    div.addEventListener('click', e => {
+        const checkbox = div.querySelector('.toggle');
+
+        if (!first) {
+            first = checkbox;
+        } else if (!second) {
+            second = checkbox;
+        } else {
+            // Third checkbox is clicked, reset first and second
+            first.checked = false;
+            first = second;
+            second = checkbox;
+        }
+
+        // Toggle the checked status of the checkbox
+        checkbox.checked = !checkbox.checked;
     });
 });
